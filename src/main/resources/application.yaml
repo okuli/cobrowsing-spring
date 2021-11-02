@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME:cobrowsing-server}
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    discovery:
+      enabled: false
+
+server:
+  port: 8086
+
+management:
+  server:
+    port: 9081
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, info, prometheus, beans
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: diskspace,mail,db
+        liveness:
+          include: diskspace,mail,livenessState,db
+
+info:
+  build:
+    name: @project.name@
+    artifact: @project.artifactId@
+    version: @project.version@
+    groupId: @project.groupId@
+    java:
+      version: @java.version@
+
+socket-io:
+  port: 5000
+  host: localhost
+
+logging:
+  level:
+    com:
+      cobrowsing:
+        api: DEBUG
